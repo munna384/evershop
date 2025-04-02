@@ -1,0 +1,48 @@
+pipeline {
+    agent any  // Runs on any available agent
+
+    environment {
+        NODE_ENV = "production"
+    }
+
+    stages {
+        stage('Checkout Code') {  // Clones the repo
+            steps {
+                git branch: 'dev', url: 'https://github.com/munna384/evershop.git'
+            }
+        }
+
+        stage('Install Dependencies') {  // Installs npm packages
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Build') {  // Runs build process (if needed)
+            steps {
+                sh 'npm run build || echo "No build step"'
+            }
+        }
+
+        stage('Run Tests') {  // Runs Jest tests
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy') {  // Deploys using PM2
+            steps {
+                sh 'pm2 restart evershop || pm2 start npm --name "evershop" -- run start'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Deployment Successful!'
+        }
+        failure {
+            echo '❌ Deployment Failed!'
+        }
+    }
+}
