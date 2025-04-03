@@ -16,10 +16,13 @@ tools {
         }
 
        stage('Install Dependencies') {
-    steps {
-        sh '/usr/bin/npm install'  // Replace with your actual npm path
-    }
-}
+            steps {
+                // Use npm directly without full path
+                sh 'npm install'
+                // Alternatively, you can use:
+                // sh '${NODEJS_HOME}/bin/npm install'
+            }
+        }
 
         stage('Build') {  // Runs build process (if needed)
             steps {
