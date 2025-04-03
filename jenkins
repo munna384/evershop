@@ -15,11 +15,11 @@ tools {
             }
         }
 
-        stage('Install Dependencies') {  // Installs npm packages
-            steps {
-                sh 'npm install'
-            }
-        }
+       stage('Install Dependencies') {
+    steps {
+        sh '/usr/bin/npm install'  // Replace with your actual npm path
+    }
+}
 
         stage('Build') {  // Runs build process (if needed)
             steps {
