@@ -1,5 +1,8 @@
 pipeline {
     agent any  // Runs on any available agent
+tools {
+        nodejs "nodejs16"  // This name should match what you configured in Jenkins
+    }
 
     environment {
         NODE_ENV = "production"
